@@ -42,7 +42,7 @@
             bindings = <
 &kp ESC           &kp Q  &kp L  &kp U  &kp COMMA  &kp PERIOD                                &kp F      &lt 2 W      &kp R  &kp Y  &kp P  &kp EQUAL
 &kp LEFT_CONTROL  &kp E  &kp I  &kp A  &kp O      &kp MINUS                                 &kp K      &lt 3 T      &kp N  &kp S  &kp H  &kp SQT
-&kp LSHFT         &kp Z  &kp X  &kp C  &kp V      &kp SEMICOLON  &kp LEFT_WIN    &kp GRAVE  &kp G      &kp D        &kp M  &kp J  &kp B  &kp NON_US_BACKSLASH
+&kp LSHFT         &kp Z  &kp X  &kp C  &kp V      &kp SEMICOLON  &kp LEFT_WIN    &kp GRAVE  &kp G      &kp D        &kp M  &kp J  &kp B  &lt 3 NON_US_BACKSLASH
                                        &kp SPACE  &mo 1          &kp LEFT_ALT    &kp BSPC   &kp ENTER  &lt 2 SLASH
             >;
         };
