@@ -11,8 +11,8 @@ layers:
   - {t: W, h: FUNC_NUM}
   - R
   - Y
-  - {t: P, h: FUNC_NUM}
-  - {t: '=', h: FUNC_NUM}
+  - P
+  - '='
   - LEFT CONTROL
   - E
   - I
@@ -39,12 +39,12 @@ layers:
   - J
   - B
   - \
-  - LEFT ALT
   - SPACE
   - SYMBOL
+  - LEFT ALT
   - BSPC
   - ENTER
-  - ARROW
+  - {t: /, h: FUNC_NUM}
   SYMBOL:
   - ESCAPE
   - '1'
@@ -85,8 +85,8 @@ layers:
   - ']'
   - /
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - {type: held}
+  - {t: ▽, type: trans}
   - DEL
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -104,37 +104,37 @@ layers:
   - F10
   - F12
   - {t: ▽, type: trans}
-  - F6
-  - F7
-  - F8
-  - F9
-  - F10
-  - HOME
-  - {t: ▽, type: trans}
-  - '-'
-  - KP 4
-  - KP 5
-  - KP 6
-  - {t: ▽, type: trans}
-  - F11
-  - F12
-  - OUT USB
-  - OUT BLE
-  - BT NXT
-  - '&studio_unlock'
-  - {t: ▽, type: trans}
-  - END
-  - {t: ▽, type: trans}
-  - '`'
-  - KP 1
-  - KP 2
-  - KP 3
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - KP 0
-  - .
-  - '='
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: BT, h: '0'}
+  - {t: BT, h: '1'}
+  - {t: BT, h: '2'}
+  - {t: BT, h: '3'}
+  - {t: BT, h: '4'}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - CAPSLOCK
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   ARROW:
   - ESCAPE
   - F1
@@ -156,7 +156,6 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
-  - {t: ▽, type: trans}
   - HOME
   - UP ARROW
   - END
@@ -166,14 +165,15 @@ layers:
   - {t: BT, h: '2'}
   - {t: BT, h: '3'}
   - {t: BT, h: '4'}
+  - {t: ▽, type: trans}
   - CAPSLOCK
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - LEFT ARROW
+  - LEFT
   - DOWN ARROW
-  - RIGHT ARROW
+  - RIGHT
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
