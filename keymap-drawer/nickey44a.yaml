@@ -84,12 +84,12 @@ layers:
   - '['
   - ']'
   - /
-  - {t: ▽, type: trans}
+  - LEFT GUI
   - {t: ▽, type: trans}
   - {type: held}
   - DEL
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - PRINTSCREEN
   FUNC_NUM:
   - ESCAPE
   - F1
@@ -129,9 +129,9 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  - CAPS
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - CAPSLOCK
+  - SCROLLLOCK
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
