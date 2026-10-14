@@ -46,7 +46,7 @@ layers:
   - ENTER
   - {t: '`', h: FUNC_NUM}
   SYMBOL:
-  - ESCAPE
+  - TAB
   - '1'
   - '2'
   - '3'
@@ -58,7 +58,7 @@ layers:
   - '9'
   - '0'
   - DELETE
-  - TAB
+  - {t: ▽, type: trans}
   - '!'
   - '@'
   - '#'
