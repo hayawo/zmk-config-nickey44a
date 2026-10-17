@@ -2,6 +2,15 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
+// 大西配列。hayawo/zmk-SIDE48 (config/side48.keymap) に合わせている。
+// SIDE48 の 5 段目 (最下段) は親指キー 3 個 + 内側キー 1 個に割り当て:
+//   左: LWIN(内側) / LALT SPACE SYMBOL(親指)
+//   右: GRAVE=半角/全角(内側) / BS Enter ARROW(親指)
+// W / P / = 長押し=FUNC_NUM、T 長押し=ARROW (SIDE48 と同じ)。
+// トラックボールが無いため SIDE48 の MOUSE / FUNCTION / SPARE レイヤーは省略。
+//
+// レイヤー: 0 BASE / 1 SYMBOL / 2 FUNC_NUM / 3 ARROW
+
 &mt {
     flavor = "balanced";
     quick-tap-ms = <0>;
@@ -13,65 +22,58 @@
 };
 
 / {
-    combos { compatible = "zmk,combos"; };
+    combos {
+        compatible = "zmk,combos";
 
-    macros {
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
+        // SIDE48 と同じ: SYMBOL レイヤーで V + ; 同時押しで BT_CLR
+
+        bt_clear {
+            bindings = <&bt BT_CLR>;
+            key-positions = <28 29>;
+            layers = <1>;
         };
-    };
-
-    behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        layer_0 {
+            display-name = "BASE";
             bindings = <
-&kp TAB    &kp Q  &kp W  &kp E  &kp R  &kp T                              &kp Y    &kp U     &kp I      &kp O    &kp P     &kp SQT
-&kp LCTRL  &kp A  &kp S  &kp D  &kp F  &kp G                              &kp H    &kp J     &kp K      &kp L    &kp SEMI  &kp MINUS
-&kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LEFT_WIN    &kp DELETE  &kp N    &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp EQUAL
-                                &mo 2  &mo 1  &kp SPACE       &kp BSPC    &kp RET  &kp RALT
+&kp ESC           &kp Q  &kp L  &kp U  &kp COMMA     &kp PERIOD                                &kp F      &kp W        &kp R  &kp Y  &kp P    &kp EQUAL
+&kp LEFT_CONTROL  &kp E  &kp I  &kp A  &kp O         &kp MINUS                                 &kp K      &kp T        &kp N  &kp S  &lt 3 H  &kp SQT
+&kp LSHFT         &kp Z  &kp X  &kp C  &kp V         &kp SEMICOLON  &kp LEFT_WIN    &kp SLASH  &kp G      &kp D        &kp M  &kp J  &kp B    &kp NON_US_BACKSLASH
+                                       &kp LEFT_ALT  &kp SPACE      &mo 1           &kp BSPC   &kp ENTER  &lt 2 GRAVE
             >;
         };
 
         layer_1 {
+            display-name = "SYMBOL";
             bindings = <
-&kp ESCAPE  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5                            &kp NUMBER_6      &kp N7                &kp N8                 &kp N9             &kp N0         &kp GRAVE
-&trans      &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                                  &kp LEFT          &kp DOWN              &kp UP                 &kp RIGHT          &trans         &kp TILDE
-&trans      &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &mo 3     &studio_unlock  &kp LEFT_BRACKET  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp BACKSLASH  &trans
-                                                      &trans        &trans        &trans    &kp DELETE      &trans            &trans
+&kp TAB  &kp N1    &kp N2  &kp N3    &kp N4          &kp N5                           &kp N6     &kp N7           &kp N8           &kp N9                &kp N0                 &kp DELETE
+&trans   &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR      &kp PRCNT                        &kp CARET  &kp AMPERSAND    &kp ASTRK        &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
+&trans   &trans    &trans  &trans    &kp SLASH       &kp QUESTION  &trans    &trans   &kp TILDE  &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SLASH
+                                     &kp SCROLLLOCK  &trans        &trans    &kp DEL  &trans     &kp PRINTSCREEN
             >;
         };
 
         layer_2 {
+            display-name = "FUNC_NUM";
             bindings = <
-&trans  &trans  &trans     &trans      &trans  &trans                    &kp QUESTION   &trans  &trans  &trans  &kp PERCENT  &trans
-&trans  &kp AT  &kp HASH   &kp DOLLAR  &trans  &trans                    &kp EXCL       &trans  &trans  &trans  &trans       &trans
-&trans  &trans  &kp ASTRK  &kp CARET   &trans  &trans  &trans    &trans  &kp AMPERSAND  &trans  &trans  &trans  &trans       &trans
-                                       &trans  &trans  &trans    &trans  &trans         &trans
+&kp ESCAPE    &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                      &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F12
+&trans        &trans        &trans        &trans        &trans        &trans                      &trans  &trans  &trans  &trans  &trans   &kp F11
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS  &trans    &trans  &trans  &trans  &trans  &trans  &trans   &trans
+                                                        &kp LEFT_GUI  &trans    &trans    &trans  &trans  &trans
             >;
         };
 
         layer_3 {
+            display-name = "ARROW";
             bindings = <
-&bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                    &trans  &trans  &trans  &trans  &trans  &trans
-&bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans                          &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans        &trans        &trans        &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                          &trans        &trans        &trans    &trans  &trans  &trans
+&kp ESCAPE  &none  &none  &none  &none   &none                         &none  &kp HOME        &kp UP_ARROW    &kp END          &none  &none
+&trans      &none  &none  &none  &none   &none                         &none  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none  &none
+&trans      &none  &none  &none  &none   &none  &none           &none  &none  &none           &none           &none            &none  &none
+                                 &trans  &none  &kp LEFT_GUI    &none  &none  &none
             >;
         };
     };

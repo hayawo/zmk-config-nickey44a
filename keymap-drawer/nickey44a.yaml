@@ -1,9 +1,52 @@
 layout: {zmk_keyboard: nickey44a}
 layers:
-  default: [TAB, Q, W, E, R, T, Y, U, I, O, P, '''', LCTRL, A, S, D, F, G, H, J, K, L, ;, '-', LSHFT, Z, X, C, V, B, LEFT WIN, DELETE, N, M, ',', ., /, '=', '2',
-    '1', SPACE, BSPC, RET, RALT]
-  '1':
-  - ESCAPE
+  BASE:
+  - ESC
+  - Q
+  - L
+  - U
+  - ','
+  - .
+  - F
+  - W
+  - R
+  - Y
+  - P
+  - '='
+  - LEFT CONTROL
+  - E
+  - I
+  - A
+  - O
+  - '-'
+  - K
+  - T
+  - N
+  - S
+  - {t: H, h: ARROW}
+  - ''''
+  - LSHFT
+  - Z
+  - X
+  - C
+  - V
+  - ;
+  - LEFT WIN
+  - /
+  - G
+  - D
+  - M
+  - J
+  - B
+  - \
+  - LEFT ALT
+  - SPACE
+  - SYMBOL
+  - BSPC
+  - ENTER
+  - {t: '`', h: FUNC_NUM}
+  SYMBOL:
+  - TAB
   - '1'
   - '2'
   - '3'
@@ -14,59 +57,52 @@ layers:
   - '8'
   - '9'
   - '0'
-  - '`'
+  - DELETE
   - {t: ▽, type: trans}
+  - '!'
+  - '@'
+  - '#'
+  - $
+  - '%'
+  - ^
+  - '&'
+  - '*'
+  - (
+  - )
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - /
+  - '?'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - '~'
+  - '{'
+  - '}'
+  - '['
+  - ']'
+  - /
+  - SCROLLLOCK
+  - {t: ▽, type: trans}
+  - {type: held}
+  - DEL
+  - {t: ▽, type: trans}
+  - PRINTSCREEN
+  FUNC_NUM:
+  - ESCAPE
   - F1
   - F2
   - F3
   - F4
   - F5
-  - LEFT
-  - DOWN
-  - UP
-  - RIGHT
-  - {t: ▽, type: trans}
-  - '~'
-  - {t: ▽, type: trans}
   - F6
   - F7
   - F8
   - F9
   - F10
-  - '3'
-  - '&studio_unlock'
-  - '['
-  - (
-  - )
-  - ']'
-  - \
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {type: held}
-  - {t: ▽, type: trans}
-  - DELETE
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  '2':
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - '?'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - '%'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - '@'
-  - '#'
-  - $
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - '!'
+  - F12
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -74,39 +110,17 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - '*'
-  - ^
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - '&'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {type: held}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  '3':
-  - BT CLR
+  - F11
   - {t: BT, h: '0'}
   - {t: BT, h: '1'}
   - {t: BT, h: '2'}
   - {t: BT, h: '3'}
   - {t: BT, h: '4'}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - BT CLR ALL
-  - {t: ▽, type: trans}
+  - CAPS
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -115,25 +129,58 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - LEFT GUI
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
+  ARROW:
+  - ESCAPE
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - HOME
+  - UP ARROW
+  - END
+  - ''
+  - ''
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - LEFT ARROW
+  - DOWN ARROW
+  - RIGHT ARROW
   - {type: held}
+  - ''
   - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - ''
+  - LEFT GUI
+  - ''
+  - ''
+  - ''
+combos:
+- p: [28, 29]
+  k: BT CLR
+  l: [SYMBOL]
