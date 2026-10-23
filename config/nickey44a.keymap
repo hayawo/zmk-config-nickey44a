@@ -22,18 +22,6 @@
 };
 
 / {
-    combos {
-        compatible = "zmk,combos";
-
-        // SIDE48 と同じ: SYMBOL レイヤーで V + ; 同時押しで BT_CLR
-
-        bt_clear {
-            bindings = <&bt BT_CLR>;
-            key-positions = <28 29>;
-            layers = <1>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -61,7 +49,7 @@
             display-name = "FUNC_NUM";
             bindings = <
 &kp ESCAPE    &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                      &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F12
-&trans        &trans        &trans        &trans        &trans        &trans                      &trans  &trans  &trans  &trans  &trans   &kp F11
+&trans        &bt BT_CLR    &trans        &trans        &trans        &trans                      &trans  &trans  &trans  &trans  &trans   &kp F11
 &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS  &trans    &trans  &trans  &trans  &trans  &trans  &trans   &trans
                                                         &kp LEFT_GUI  &trans    &trans    &trans  &trans  &trans
             >;
