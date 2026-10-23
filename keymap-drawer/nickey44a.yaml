@@ -104,7 +104,7 @@ layers:
   - F10
   - F12
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - BT CLR
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -180,7 +180,3 @@ layers:
   - ''
   - ''
   - ''
-combos:
-- p: [28, 29]
-  k: BT CLR
-  l: [SYMBOL]
