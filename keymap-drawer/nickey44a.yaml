@@ -84,11 +84,11 @@ layers:
   - '['
   - ']'
   - /
-  - SCROLLLOCK
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
   - DEL
-  - {t: ▽, type: trans}
+  - SCROLLLOCK
   - PRINTSCREEN
   FUNC_NUM:
   - ESCAPE
