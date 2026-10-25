@@ -41,10 +41,10 @@
         layer_1 {
             display-name = "SYMBOL";
             bindings = <
-&kp TAB  &kp N1    &kp N2  &kp N3    &kp N4          &kp N5                           &kp N6     &kp N7           &kp N8           &kp N9                &kp N0                 &kp DELETE
-&trans   &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR      &kp PRCNT                        &kp CARET  &kp AMPERSAND    &kp ASTRK        &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
-&trans   &trans    &trans  &trans    &kp SLASH       &kp QUESTION  &trans    &trans   &kp TILDE  &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SLASH
-                                     &kp SCROLLLOCK  &trans        &trans    &kp DEL  &trans     &kp PRINTSCREEN
+&kp TAB  &kp N1    &kp N2  &kp N3    &kp N4      &kp N5                           &kp N6          &kp N7           &kp N8           &kp N9                &kp N0                 &kp DELETE
+&trans   &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR  &kp PRCNT                        &kp CARET       &kp AMPERSAND    &kp ASTRK        &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
+&trans   &trans    &trans  &trans    &kp SLASH   &kp QUESTION  &trans    &trans   &kp TILDE       &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SLASH
+                                     &trans      &trans        &trans    &kp DEL  &kp SCROLLLOCK  &kp PRINTSCREEN
             >;
         };
 
