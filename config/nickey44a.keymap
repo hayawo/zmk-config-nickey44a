@@ -10,6 +10,7 @@
 // BT_CLR は FUNC_NUM の E の位置 (BT_SEL 1 の上)。
 //   SIDE48 と同じ V + ; のコンボは、SYMBOL レイヤーで / ? を速く打つと
 //   誤爆して接続が切れたため廃止した。
+// ZMK Studio のロック解除 (&studio_unlock) は FUNC_NUM の左手内側キー。
 // トラックボールが無いため SIDE48 の MOUSE / FUNCTION / SPARE レイヤーは省略。
 //
 // レイヤー: 0 BASE / 1 SYMBOL / 2 FUNC_NUM / 3 ARROW
@@ -53,7 +54,7 @@
             bindings = <
 &kp ESCAPE    &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                      &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F12
 &trans        &bt BT_CLR    &trans        &trans        &trans        &trans                      &trans  &trans  &trans  &trans  &trans   &kp F11
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS  &trans    &trans  &trans  &trans  &trans  &trans  &trans   &trans
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS  &studio_unlock    &trans  &trans  &trans  &trans  &trans  &trans   &trans
                                                         &kp LEFT_GUI  &trans    &trans    &trans  &trans  &trans
             >;
         };
