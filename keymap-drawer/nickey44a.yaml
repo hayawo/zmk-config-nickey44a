@@ -104,7 +104,7 @@ layers:
   - F10
   - F12
   - {t: ▽, type: trans}
-  - BT CLR
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
