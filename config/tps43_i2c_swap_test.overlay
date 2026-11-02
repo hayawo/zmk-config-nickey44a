@@ -1,0 +1,18 @@
+/* Test only: swap SDA/SCL on the right TPS43 to check for crossed wiring. */
+&pinctrl {
+    nickey44a_tps43_i2c0_default: nickey44a_tps43_i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 10)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 9)>;
+            bias-pull-up;
+        };
+    };
+
+    nickey44a_tps43_i2c0_sleep: nickey44a_tps43_i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 10)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 9)>;
+            low-power-enable;
+        };
+    };
+};
