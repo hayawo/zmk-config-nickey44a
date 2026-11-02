@@ -20,6 +20,8 @@
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
                     <NRF_PSEL(TWIM_SCL, 0, 10)>;
+            /* The TPS43 breakout has no I2C pull-up resistors. */
+            bias-pull-up;
         };
     };
 
