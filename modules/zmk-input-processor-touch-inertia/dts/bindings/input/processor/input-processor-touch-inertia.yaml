@@ -1,0 +1,33 @@
+description: Touch-release inertia for a relative wheel axis
+compatible: "zmk,input-processor-touch-inertia"
+include: ip_zero_param.yaml
+properties:
+  cancel-scroll-inertia-on-ctrl:
+    type: boolean
+    description: Suppress scroll inertia while either Ctrl modifier is active.
+  wheel-code:
+    type: int
+    required: true
+  touch-code:
+    type: int
+    required: true
+  tick-ms:
+    type: int
+    default: 10
+    description: Tick interval in milliseconds; zero is treated as one.
+  decay-permille:
+    type: int
+    default: 920
+    description: Velocity retention per tick, from 0 through 999.
+  stop-threshold-q8:
+    type: int
+    default: 96
+    description: Inertia stops below this positive Q8 velocity in wheel units per tick.
+  launch-threshold-q8:
+    type: int
+    default: 384
+    description: Minimum Q8 velocity required to start inertia on touch release.
+  ema-new-permille:
+    type: int
+    default: 250
+    description: New sample weight, from 0 through 1000.

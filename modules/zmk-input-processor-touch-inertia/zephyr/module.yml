@@ -1,0 +1,5 @@
+name: zmk-input-processor-touch-inertia
+build:
+  cmake: .
+  settings:
+    dts_root: .

@@ -1,3 +1,5 @@
 build:
+  cmake: .
   settings:
     board_root: .
+    dts_root: modules/zmk-input-processor-touch-inertia

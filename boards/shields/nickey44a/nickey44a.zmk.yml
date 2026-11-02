@@ -1,6 +1,6 @@
 file_format: "1"
-id: nickey44a
-name: nickey44a
+id: nickey44a-pad
+name: Nickey44A-PAD
 type: shield
 url: https://github.com/nixiy/zmk-config-nickey44a
 requires: [seeeduino_xiao_ble]

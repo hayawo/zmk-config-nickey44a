@@ -1,4 +1,110 @@
 #include "nickey44a.dtsi"
+#include <input/processors.dtsi>
+#include <dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/*
+ * TPS43 FPC breakout wiring:
+ *   SDA = XIAO NFC1/P0.09
+ *   SCL = XIAO NFC2/P0.10
+ *   RDY = XIAO P1.10
+ *   NRST = XIAO P0.16
+ */
+
+&uicr {
+    nfct-pins-as-gpios;
+};
+
+&pinctrl {
+    nickey44a_left_tps43_i2c0_default: nickey44a_left_tps43_i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 10)>;
+        };
+    };
+
+    nickey44a_left_tps43_i2c0_sleep: nickey44a_left_tps43_i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 10)>;
+            low-power-enable;
+        };
+    };
+};
+
+/ {
+    left_swipe_axis_mapper: left_swipe_axis_mapper {
+        compatible = "zmk,input-processor-code-mapper";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_REL>;
+        map = <INPUT_REL_HWHEEL INPUT_REL_DIAL>;
+    };
+
+    left_wheel_to_hwheel: left_wheel_to_hwheel {
+        compatible = "zmk,input-processor-code-mapper";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_REL>;
+        map = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+    };
+
+    left_middle_click_mapper: left_middle_click_mapper {
+        compatible = "zmk,input-processor-code-mapper";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_KEY>;
+        map = <INPUT_BTN_1 INPUT_BTN_2>;
+    };
+
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        left_tps43_split: left_tps43_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            device = <&left_tps43>;
+            /* Keep swipe motion distinct from the mapped horizontal scroll. */
+            input-processors = <&zip_xy_scaler 0 1>,
+                               <&left_swipe_axis_mapper>,
+                               <&left_wheel_to_hwheel>,
+                               <&left_middle_click_mapper>;
+        };
+    };
+};
+
+&i2c0 {
+    status = "okay";
+    compatible = "nordic,nrf-twim";
+    pinctrl-0 = <&nickey44a_left_tps43_i2c0_default>;
+    pinctrl-1 = <&nickey44a_left_tps43_i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+    clock-frequency = <I2C_BITRATE_STANDARD>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    left_tps43: tps43@74 {
+        compatible = "azoteq,tps43";
+        reg = <0x74>;
+        rst-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+        rdy-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+
+        press-and-hold;
+        two-finger-tap;
+        scroll;
+        /* Reverse vertical gestures before WHEEL is mapped to HWHEEL. */
+        invert-scroll-y;
+        /* Match physical left/right after the controller's invert-x. */
+        invert-scroll-x;
+
+        filter-settings = <0x0B>;
+        filter-dynamic-bottom = <5>;
+        sensitivity = <100>;
+        scroll-sensitivity = <5>;
+        hold-time = <1>;
+        enable-power-management;
+        /* Keep physical vertical motion on WHEEL: no controller XY swap. */
+        invert-x;
+    };
+};
 
 &kscan0 {
         col-gpios

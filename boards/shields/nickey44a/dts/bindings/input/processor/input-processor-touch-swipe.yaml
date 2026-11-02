@@ -1,0 +1,42 @@
+# Bundled binding mirror; keep identical to the standalone touch-swipe binding.
+description: One horizontal swipe per complete touch, with configurable ZMK keycodes
+compatible: "zmk,input-processor-touch-swipe"
+include: ip_zero_param.yaml
+properties:
+  hwheel-code:
+    type: int
+    required: true
+  wheel-code:
+    type: int
+    required: true
+  touch-code:
+    type: int
+    required: true
+  threshold:
+    type: int
+    default: 8
+    description: Positive minimum net horizontal wheel units.
+  axis-ratio:
+    type: int
+    default: 2
+    description: Positive horizontal magnitude to total vertical travel ratio.
+  left-keycode:
+    type: int
+    required: true
+    description: Encoded ZMK keycode tapped on a negative horizontal swipe.
+  right-keycode:
+    type: int
+    required: true
+    description: Encoded ZMK keycode tapped on a positive horizontal swipe.
+  override-layer:
+    type: int
+    default: -1
+    description: Layer ID selecting alternate keycodes at swipe recognition; -1 disables.
+  override-left-keycode:
+    type: int
+    default: 0
+    description: Encoded keycode for a negative swipe when override-layer is active.
+  override-right-keycode:
+    type: int
+    default: 0
+    description: Encoded keycode for a positive swipe when override-layer is active.

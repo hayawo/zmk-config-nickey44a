@@ -3,16 +3,20 @@
 #include <dt-bindings/zmk/keys.h>
 
 // 大西配列。hayawo/zmk-SIDE48 (config/side48.keymap) をもとに調整。
-// 親指キー 3 個 + 内側キー 1 個:
-//   左: Win(内側) / Alt Space SYMBOL(親指)
-//   右: /(内側) / BS Enter, タップ=GRAVE(半角/全角) 長押し=FUNC_NUM(親指)
+// Nickey44A-PAD: 左右の内側キー位置に TPS43 トラックパッドを載せたため、
+//   内側キー (旧 LEFT_WIN / SLASH) は &none。
+// 親指キー 3 個:
+//   左: Alt Space SYMBOL
+//   右: BS Enter, タップ=GRAVE(半角/全角) 長押し=FUNC_NUM
+// トラックパッドの動作は docs/dual-tps43.md を参照。
+//   Layer 1 (SYMBOL) 中は右パッドが Snipe (移動量 2/3) になり、
+//   2本指左右スワイプが進む/戻る → タブ移動に切り替わる。
 // H 長押し=ARROW。
 // BT_CLR は誤爆で接続が切れるため割り当てていない。
 //   ペアリング情報を消したいときは settings_reset を左右に書き込む
 //   (全プロファイルと左右間の接続が消えるので、書き戻して再ペアリング)。
 // ZMK Studio のロック解除 (&studio_unlock) は FUNC_NUM の - の位置 (Caps の上)。
-//   左手内側キーはトラックパッド改造で使えなくなるため避けている。
-// トラックボールが無いため SIDE48 の MOUSE / FUNCTION / SPARE レイヤーは省略。
+// SIDE48 の MOUSE / FUNCTION / SPARE レイヤーは省略 (ポインティングはパッド側で処理)。
 //
 // レイヤー: 0 BASE / 1 SYMBOL / 2 FUNC_NUM / 3 ARROW
 
@@ -35,7 +39,7 @@
             bindings = <
 &kp ESC           &kp Q  &kp L  &kp U  &kp COMMA     &kp PERIOD                                &kp F      &kp W        &kp R  &kp Y  &kp P    &kp EQUAL
 &kp LEFT_CONTROL  &kp E  &kp I  &kp A  &kp O         &kp MINUS                                 &kp K      &kp T        &kp N  &kp S  &lt 3 H  &kp SQT
-&kp LSHFT         &kp Z  &kp X  &kp C  &kp V         &kp SEMICOLON  &kp LEFT_WIN    &kp SLASH  &kp G      &kp D        &kp M  &kp J  &kp B    &kp NON_US_BACKSLASH
+&kp LSHFT         &kp Z  &kp X  &kp C  &kp V         &kp SEMICOLON  &none          &none      &kp G      &kp D        &kp M  &kp J  &kp B    &kp NON_US_BACKSLASH
                                        &kp LEFT_ALT  &kp SPACE      &mo 1           &kp BSPC   &kp ENTER  &lt 2 GRAVE
             >;
         };
