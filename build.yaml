@@ -29,3 +29,9 @@ include:
   - board: seeeduino_xiao_ble
     shield: settings_reset
     artifact-name: settings_reset
+  # PAD 動作確認用: 右手を USB 接続してシリアルでログを読む版 (Studio なし)
+  - board: seeeduino_xiao_ble
+    shield: nickey44a_r rgbled_adapter
+    snippet: zmk-usb-logging
+    cmake-args: -DCONFIG_INPUT_LOG_LEVEL_INF=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=15000 -DCONFIG_LOG_BUFFER_SIZE=16384
+    artifact-name: nickey44a_r_logging
