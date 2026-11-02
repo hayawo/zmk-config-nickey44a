@@ -1,0 +1,6 @@
+/* Test only: leave P0.16 (NRST) and P1.10 (RDY) untouched (high-Z) to check
+ * whether the white/yellow wires are interfering with SDA/SCL. */
+&tps43 {
+    /delete-property/ rst-gpios;
+    /delete-property/ rdy-gpios;
+};
