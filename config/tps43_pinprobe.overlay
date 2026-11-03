@@ -1,0 +1,4 @@
+/* Test only: free the TPS43 lines for the pin probe. */
+&tps43_listener { status = "disabled"; };
+&tps43 { status = "disabled"; };
+&i2c0 { status = "disabled"; };
