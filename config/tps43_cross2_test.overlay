@@ -1,0 +1,24 @@
+/* Test only: breakout castellated pads may be crossed vs. the keyboard PCB.
+ * I2C on the white/yellow wires (P0.16 / P1.10), NRST on P0.10, RDY on P0.09. */
+&pinctrl {
+    nickey44a_tps43_i2c0_default: nickey44a_tps43_i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 16)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 10)>;
+            bias-pull-up;
+        };
+    };
+
+    nickey44a_tps43_i2c0_sleep: nickey44a_tps43_i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 16)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 10)>;
+            low-power-enable;
+        };
+    };
+};
+
+&tps43 {
+    rst-gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
+    rdy-gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
+};
