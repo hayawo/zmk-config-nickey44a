@@ -53,3 +53,9 @@ include:
     snippet: zmk-usb-logging
     cmake-args: -DCONFIG_INPUT_LOG_LEVEL_INF=y -DCONFIG_ZMK_LOG_LEVEL_INF=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=60000 -DCONFIG_LOG_BUFFER_SIZE=16384 -DEXTRA_DTC_OVERLAY_FILE=/tmp/zmk-config/config/tps43_cross2_test.overlay
     artifact-name: nickey44a_r_logging_cross2
+  # PAD 動作確認用: 白線=RDY / 黄線=NRST として扱うログ版
+  - board: seeeduino_xiao_ble
+    shield: nickey44a_r rgbled_adapter
+    snippet: zmk-usb-logging
+    cmake-args: -DCONFIG_INPUT_LOG_LEVEL_INF=y -DCONFIG_ZMK_LOG_LEVEL_INF=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=60000 -DCONFIG_LOG_BUFFER_SIZE=16384 -DEXTRA_DTC_OVERLAY_FILE=/tmp/zmk-config/config/tps43_rdyswap_test.overlay
+    artifact-name: nickey44a_r_logging_rdyswap

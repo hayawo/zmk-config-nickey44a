@@ -1,0 +1,5 @@
+/* Test only: white wire (P0.16) is RDY, yellow wire (P1.10) is NRST. */
+&tps43 {
+    rst-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+    rdy-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+};
