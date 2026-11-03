@@ -65,3 +65,15 @@ include:
     snippet: zmk-usb-logging
     cmake-args: -DNICKEY_PIN_PROBE=ON -DCONFIG_ZMK_LOG_LEVEL_INF=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=60000 -DCONFIG_LOG_BUFFER_SIZE=32768 -DEXTRA_DTC_OVERLAY_FILE=/tmp/zmk-config/config/tps43_pinprobe.overlay
     artifact-name: nickey44a_r_pinprobe
+  # PAD 動作確認用: 左手を USB 接続してシリアルでログを読む版
+  - board: seeeduino_xiao_ble
+    shield: nickey44a_l rgbled_adapter
+    snippet: zmk-usb-logging
+    cmake-args: -DCONFIG_INPUT_LOG_LEVEL_INF=y -DCONFIG_ZMK_LOG_LEVEL_INF=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=60000 -DCONFIG_LOG_BUFFER_SIZE=16384
+    artifact-name: nickey44a_l_logging
+  # PAD 診断用: 左手の 4 本の線を調べるログ版
+  - board: seeeduino_xiao_ble
+    shield: nickey44a_l rgbled_adapter
+    snippet: zmk-usb-logging
+    cmake-args: -DNICKEY_PIN_PROBE=ON -DCONFIG_ZMK_LOG_LEVEL_INF=y -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=60000 -DCONFIG_LOG_BUFFER_SIZE=32768 -DEXTRA_DTC_OVERLAY_FILE=/tmp/zmk-config/config/tps43_pinprobe_left.overlay
+    artifact-name: nickey44a_l_pinprobe

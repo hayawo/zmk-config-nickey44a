@@ -1,0 +1,4 @@
+/* Test only: free the left TPS43 lines for the pin probe. */
+&left_tps43_split { status = "disabled"; };
+&left_tps43 { status = "disabled"; };
+&i2c0 { status = "disabled"; };
