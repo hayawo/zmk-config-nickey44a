@@ -103,6 +103,12 @@
         scroll-sensitivity = <5>;
         hold-time = <1>;
         enable-power-management;
+        /* Faster first-touch response: keep idle/low-power scan intervals short.
+         * Costs some battery while the keyboard is awake. */
+        report-rate-idle-touch = <10>;
+        report-rate-idle = <10>;
+        report-rate-lp1 = <20>;
+        report-rate-lp2 = <40>;
         /* Keep physical vertical motion on WHEEL: no controller XY swap. */
         invert-x;
     };

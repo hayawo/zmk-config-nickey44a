@@ -82,8 +82,9 @@
         touch-code = <INPUT_BTN_TOUCH>;
         threshold = <8>;
         axis-ratio = <2>;
-        left-keycode = <C_AC_BACK>;
-        right-keycode = <C_AC_FORWARD>;
+        /* Alt+Left/Right: browser back/forward that also works on Windows. */
+        left-keycode = <LA(LEFT)>;
+        right-keycode = <LA(RIGHT)>;
         override-layer = <1>;
         /* Physical right swipe is negative after orientation correction. */
         override-left-keycode = <LC(TAB)>;
@@ -148,6 +149,12 @@
         scroll-sensitivity = <5>;
         hold-time = <250>;
         enable-power-management;
+        /* Faster first-touch response: keep idle/low-power scan intervals short.
+         * Costs some battery while the keyboard is awake. */
+        report-rate-idle-touch = <10>;
+        report-rate-idle = <10>;
+        report-rate-lp1 = <20>;
+        report-rate-lp2 = <40>;
         /* Controller settings used when the listener's correction was measured. */
         switch-xy;
         invert-x;
