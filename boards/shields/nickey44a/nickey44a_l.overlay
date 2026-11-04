@@ -92,6 +92,8 @@
         press-and-hold;
         two-finger-tap;
         scroll;
+        /* Three-finger up/down swipe = volume (mapped on the central). */
+        three-finger-swipe;
         /* Reverse vertical gestures before WHEEL is mapped to HWHEEL. */
         invert-scroll-y;
         /* Match physical left/right after the controller's invert-x. */

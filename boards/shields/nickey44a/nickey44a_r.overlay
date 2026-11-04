@@ -50,7 +50,17 @@
     left_tps43_listener: left_tps43_listener {
         compatible = "zmk,input-listener";
         device = <&left_tps43_split>;
-        input-processors = <&left_tps43_tab_swipe>;
+        input-processors = <&left_tps43_volume>, <&left_tps43_tab_swipe>;
+    };
+
+    /* Left pad three-finger swipe: up = volume up, down = volume down.
+     * Left/right three-finger events are left unmapped and ignored. */
+    left_tps43_volume: left_tps43_volume {
+        compatible = "zmk,input-processor-behaviors";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_KEY>;
+        codes = <INPUT_BTN_NORTH INPUT_BTN_SOUTH>;
+        bindings = <&kp C_VOLUME_UP>, <&kp C_VOLUME_DOWN>;
     };
 
     left_tps43_tab_swipe: left_tps43_tab_swipe {
