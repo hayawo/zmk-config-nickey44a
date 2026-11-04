@@ -53,8 +53,8 @@
         input-processors = <&left_tps43_volume>, <&left_tps43_tab_swipe>;
     };
 
-    /* Left pad three-finger swipe: up = volume up, down = volume down.
-     * Left/right three-finger events are left unmapped and ignored. */
+    /* Left pad one-finger flick: up = volume up, down = volume down.
+     * Left/right flick events are left unmapped and ignored. */
     left_tps43_volume: left_tps43_volume {
         compatible = "zmk,input-processor-behaviors";
         #input-processor-cells = <0>;
