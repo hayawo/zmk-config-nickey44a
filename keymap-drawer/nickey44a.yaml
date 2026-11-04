@@ -31,8 +31,8 @@ layers:
   - C
   - V
   - ;
-  - LEFT WIN
-  - /
+  - ''
+  - ''
   - G
   - D
   - M
@@ -136,9 +136,9 @@ layers:
   - {t: ▽, type: trans}
   - {type: held}
   ARROW:
-  - ESCAPE
+  - TAB
   - ''
-  - ''
+  - {t: ▽, type: trans}
   - ''
   - ''
   - ''
@@ -164,13 +164,13 @@ layers:
   - ''
   - ''
   - ''
+  - {t: ▽, type: trans}
   - ''
   - ''
   - ''
   - ''
-  - ''
-  - ''
-  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - ''
   - ''
   - ''
