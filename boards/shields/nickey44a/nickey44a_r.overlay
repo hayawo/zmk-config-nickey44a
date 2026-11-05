@@ -114,6 +114,17 @@
         cancel-scroll-inertia-on-ctrl;
     };
 
+    /* Right pad three-finger swipe. The driver reports it in controller
+     * coordinates, before the orientation transform below: physical up is
+     * BTN_EAST and physical down is BTN_WEST. Left/right are unmapped. */
+    tps43_three_finger: tps43_three_finger {
+        compatible = "zmk,input-processor-behaviors";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_KEY>;
+        codes = <INPUT_BTN_EAST INPUT_BTN_WEST>;
+        bindings = <&kp LG(M)>, <&kp LG(LS(M))>;
+    };
+
     tps43_listener: tps43_listener {
         compatible = "zmk,input-listener";
         device = <&tps43>;
@@ -121,7 +132,8 @@
         input-processors = <&tps43_orientation (INPUT_TRANSFORM_XY_SWAP |
                                              INPUT_TRANSFORM_X_INVERT |
                                              INPUT_TRANSFORM_Y_INVERT)>,
-                           <&tps43_touch_swipe>, <&tps43_touch_inertia>;
+                           <&tps43_touch_swipe>, <&tps43_touch_inertia>,
+                           <&tps43_three_finger>;
 
         snipe_layer {
             layers = <1>;
@@ -150,6 +162,10 @@
         single-tap;
         two-finger-tap;
         scroll;
+        /* Three-finger swipe: up/down = minimize/restore all windows. */
+        three-finger-swipe;
+        /* One action per swipe: ignore repeats within 0.8 s. */
+        three-finger-swipe-throttle-ms = <800>;
         /* The listener swaps axes, so driver X controls host vertical scrolling. */
         invert-scroll-y;
 
