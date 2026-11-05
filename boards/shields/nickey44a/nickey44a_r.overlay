@@ -125,6 +125,19 @@
         bindings = <&kp LG(M)>, <&kp LG(LS(M))>;
     };
 
+    /* Two-finger pinch: Ctrl + mouse wheel (zoom in browsers, Office, etc.).
+     * Last in the chain so scroll inertia never sees these wheel steps. */
+    tps43_pinch_zoom: tps43_pinch_zoom {
+        compatible = "zmk,input-processor-pinch-zoom";
+        #input-processor-cells = <0>;
+        zoom-code = <INPUT_REL_MISC>;
+        wheel-code = <INPUT_REL_WHEEL>;
+        touch-code = <INPUT_BTN_TOUCH>;
+        divisor = <40>;
+        modifier = <LCTRL>;
+        release-ms = <400>;
+    };
+
     tps43_listener: tps43_listener {
         compatible = "zmk,input-listener";
         device = <&tps43>;
@@ -133,7 +146,7 @@
                                              INPUT_TRANSFORM_X_INVERT |
                                              INPUT_TRANSFORM_Y_INVERT)>,
                            <&tps43_touch_swipe>, <&tps43_touch_inertia>,
-                           <&tps43_three_finger>;
+                           <&tps43_three_finger>, <&tps43_pinch_zoom>;
 
         snipe_layer {
             layers = <1>;
@@ -164,6 +177,8 @@
         scroll;
         /* Three-finger swipe: up/down = minimize/restore all windows. */
         three-finger-swipe;
+        /* Two-finger pinch, converted to Ctrl + wheel by tps43_pinch_zoom. */
+        zoom;
         /* One action per swipe: ignore repeats within 0.8 s. */
         three-finger-swipe-throttle-ms = <800>;
         /* The listener swaps axes, so driver X controls host vertical scrolling. */

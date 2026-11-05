@@ -1,0 +1,31 @@
+description: Convert a pinch/zoom axis into modifier + mouse wheel steps
+compatible: "zmk,input-processor-pinch-zoom"
+include: ip_zero_param.yaml
+properties:
+  zoom-code:
+    type: int
+    required: true
+    description: INPUT_EV_REL code carrying the zoom amount (e.g. INPUT_REL_MISC).
+  wheel-code:
+    type: int
+    required: true
+    description: INPUT_EV_REL code to emit (normally INPUT_REL_WHEEL).
+  touch-code:
+    type: int
+    required: true
+    description: INPUT_EV_KEY code whose release ends the gesture (INPUT_BTN_TOUCH).
+  divisor:
+    type: int
+    default: 20
+    description: Zoom units per emitted wheel step (larger = slower zoom).
+  invert:
+    type: boolean
+    description: Reverse the zoom direction.
+  modifier:
+    type: int
+    required: true
+    description: Encoded ZMK keycode held while zooming (e.g. LCTRL).
+  release-ms:
+    type: int
+    default: 400
+    description: Release the modifier after this long without zoom input.
