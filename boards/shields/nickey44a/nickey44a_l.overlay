@@ -97,8 +97,8 @@
         swipes;
         /* Easier volume flicks: shorter distance, slower and less straight
          * flicks still count (IQS5xx defaults are roughly 300 px / 150 ms). */
-        swipe-initial-distance = <150>;
-        swipe-initial-time = <250>;
+        swipe-initial-distance = <75>;
+        swipe-initial-time = <300>;
         swipe-angle = <30>;
         /* Two-finger pinch, converted to Ctrl + wheel on the central. */
         zoom;
