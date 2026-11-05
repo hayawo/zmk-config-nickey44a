@@ -133,7 +133,7 @@
         zoom-code = <INPUT_REL_MISC>;
         wheel-code = <INPUT_REL_WHEEL>;
         touch-code = <INPUT_BTN_TOUCH>;
-        divisor = <40>;
+        divisor = <4>;
         modifier = <LCTRL>;
         release-ms = <400>;
     };
