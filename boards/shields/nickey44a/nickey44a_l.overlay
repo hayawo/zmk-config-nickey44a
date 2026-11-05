@@ -95,6 +95,11 @@
         /* One-finger up/down flick = volume (mapped on the central).
          * The left pad never moves the cursor, so 1-finger swipes are free. */
         swipes;
+        /* Easier volume flicks: shorter distance, slower and less straight
+         * flicks still count (IQS5xx defaults are roughly 300 px / 150 ms). */
+        swipe-initial-distance = <150>;
+        swipe-initial-time = <250>;
+        swipe-angle = <30>;
         /* Two-finger pinch, converted to Ctrl + wheel on the central. */
         zoom;
         /* Reverse vertical gestures before WHEEL is mapped to HWHEEL. */
