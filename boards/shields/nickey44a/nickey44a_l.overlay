@@ -100,6 +100,10 @@
         swipe-initial-distance = <75>;
         swipe-initial-time = <300>;
         swipe-angle = <30>;
+        /* Keep moving after the first flick: one more volume step every
+         * 60 px, as long as each segment takes under 500 ms (slider feel). */
+        swipe-consecutive-distance = <60>;
+        swipe-consecutive-time = <500>;
         /* Two-finger pinch, converted to Ctrl + wheel on the central. */
         zoom;
         /* Reverse vertical gestures before WHEEL is mapped to HWHEEL. */
