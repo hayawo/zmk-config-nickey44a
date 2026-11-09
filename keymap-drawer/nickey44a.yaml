@@ -128,7 +128,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - {h: BT CLR}
   - LEFT GUI
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
