@@ -650,7 +650,7 @@ path.combo {
 </g>
 <g transform="translate(812, 140)" class="key keypos-37">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="24" class="key hold">BT CLR</text>
+<text x="0" y="24" class="key hold"><tspan style="font-size: 70%">BT CLR CMD</tspan></text>
 </g>
 <g transform="translate(252, 196)" class="key keypos-38">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
