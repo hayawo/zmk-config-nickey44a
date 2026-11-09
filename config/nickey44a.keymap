@@ -12,9 +12,9 @@
 //   Layer 1 (SYMBOL) 中は右パッドが Snipe (移動量 2/3) になり、
 //   2本指左右スワイプが進む/戻る → タブ移動に切り替わる。
 // H 長押し=ARROW。
-// BT_CLR は誤爆で接続が切れるため割り当てていない。
-//   ペアリング情報を消したいときは settings_reset を左右に書き込む
-//   (全プロファイルと左右間の接続が消えるので、書き戻して再ペアリング)。
+// BT_CLR は FUNC_NUM の右下角 (NUBS の位置) を 2 秒長押ししたときだけ効く
+//   (bt_clr_hold)。消えるのは選択中のプロファイルのペアリングだけ。
+//   全部消したいときは settings_reset を左右に書き込む。
 // ZMK Studio のロック解除 (&studio_unlock) は FUNC_NUM の - の位置 (Caps の上)。
 // SIDE48 の MOUSE / FUNCTION / SPARE レイヤーは省略 (ポインティングはパッド側で処理)。
 //
@@ -31,6 +31,17 @@
 };
 
 / {
+    behaviors {
+        // 2 秒押し続けたときだけ BT_CLR。それより早く離すと何もしない。
+        bt_clr_hold: bt_clr_hold {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <2000>;
+            bindings = <&bt>, <&none>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -59,7 +70,7 @@
             bindings = <
 &kp ESCAPE    &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                            &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F12
 &trans        &trans        &trans        &trans        &trans        &studio_unlock                    &trans  &trans  &trans  &trans  &trans   &kp F11
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS        &trans    &trans  &trans  &trans  &trans  &trans  &trans   &trans
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS        &trans    &trans  &trans  &trans  &trans  &trans  &trans   &bt_clr_hold BT_CLR 0
                                                         &kp LEFT_GUI  &trans          &trans    &trans  &trans  &trans
             >;
         };
