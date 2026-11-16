@@ -84,7 +84,7 @@ def main():
     assert not enabled(lt, "switch-xy")
     assert lt.props["hold-time"].to_num() == 1
     assert enabled(lt, "invert-scroll-x") and enabled(lt, "invert-scroll-y")
-    assert not enabled(rt, "press-and-hold")
+    assert enabled(rt, "press-and-hold")
     for name in ("single-tap", "two-finger-tap", "scroll", "switch-xy", "invert-x"):
         assert enabled(rt, name), name
     assert enabled(lt, "two-finger-tap") and enabled(lt, "scroll")
@@ -97,22 +97,21 @@ def main():
     listener = right.label2node["left_tps43_listener"]
     assert listener.props["device"].to_node() is rs
     swipe = right.label2node["left_tps43_tab_swipe"]
-    assert cells_of(listener.props["input-processors"]) == [
-        swipe.props["phandle"].to_num()]
+    assert [right.phandle2node[h].name for h in cells_of(listener.props["input-processors"])] == [
+        "left_tps43_volume", "left_tps43_tab_swipe", "left_tps43_pinch_zoom"]
     assert swipe.props["hwheel-code"].to_num() == c["INPUT_REL_DIAL"]
     assert swipe.props["wheel-code"].to_num() == c["INPUT_REL_HWHEEL"]
     assert swipe.props["touch-code"].to_num() == c["INPUT_BTN_TOUCH"]
     assert swipe.props["threshold"].to_num() == 8
     assert swipe.props["axis-ratio"].to_num() == 2
-    # Physical right swipe produces negative DIAL; encoded TAB with Ctrl / Ctrl+Shift.
-    assert swipe.props["left-keycode"].to_num() == 0x0107002b
-    assert swipe.props["right-keycode"].to_num() == 0x0307002b
-    right_swipe = right.label2node["tps43_touch_swipe"]
-    assert right_swipe.props["left-keycode"].to_num() == 0x04070050
-    assert right_swipe.props["right-keycode"].to_num() == 0x0407004f
-    assert right_swipe.props["override-layer"].to_num() == 1
-    assert right_swipe.props["override-left-keycode"].to_num() == 0x0107002b
-    assert right_swipe.props["override-right-keycode"].to_num() == 0x0307002b
+    # Physical right swipe produces negative DIAL: back (Alt+Left) / forward (Alt+Right),
+    # and on layer 1 Ctrl+Tab / Ctrl+Shift+Tab.
+    assert swipe.props["left-keycode"].to_num() == 0x04070050
+    assert swipe.props["right-keycode"].to_num() == 0x0407004f
+    assert swipe.props["override-layer"].to_num() == 1
+    assert swipe.props["override-left-keycode"].to_num() == 0x0107002b
+    assert swipe.props["override-right-keycode"].to_num() == 0x0307002b
+    assert "tps43_touch_swipe" not in right.label2node
 
     chain, cells = [], cells_of(ls.props["input-processors"])
     while cells:

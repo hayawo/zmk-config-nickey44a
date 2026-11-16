@@ -72,9 +72,14 @@
         touch-code = <INPUT_BTN_TOUCH>;
         threshold = <8>;
         axis-ratio = <2>;
-        /* Measured left pad: physical right swipe produces negative DIAL. */
-        left-keycode = <LC(TAB)>;
-        right-keycode = <LC(LS(TAB))>;
+        /* Measured left pad: physical right swipe produces negative DIAL.
+         * Right swipe = back (Alt+Left), left swipe = forward (Alt+Right). */
+        left-keycode = <LA(LEFT)>;
+        right-keycode = <LA(RIGHT)>;
+        /* While SYMBOL (layer 1) is held: switch browser tabs instead. */
+        override-layer = <1>;
+        override-left-keycode = <LC(TAB)>;
+        override-right-keycode = <LC(LS(TAB))>;
     };
 
     tps43_orientation: tps43_orientation {
@@ -83,23 +88,6 @@
         type = <INPUT_EV_REL>;
         x-codes = <INPUT_REL_X INPUT_REL_HWHEEL>;
         y-codes = <INPUT_REL_Y INPUT_REL_WHEEL>;
-    };
-
-    tps43_touch_swipe: tps43_touch_swipe {
-        compatible = "zmk,input-processor-touch-swipe";
-        #input-processor-cells = <0>;
-        hwheel-code = <INPUT_REL_HWHEEL>;
-        wheel-code = <INPUT_REL_WHEEL>;
-        touch-code = <INPUT_BTN_TOUCH>;
-        threshold = <8>;
-        axis-ratio = <2>;
-        /* Alt+Left/Right: browser back/forward that also works on Windows. */
-        left-keycode = <LA(LEFT)>;
-        right-keycode = <LA(RIGHT)>;
-        override-layer = <1>;
-        /* Physical right swipe is negative after orientation correction. */
-        override-left-keycode = <LC(TAB)>;
-        override-right-keycode = <LC(LS(TAB))>;
     };
 
     tps43_touch_inertia: tps43_touch_inertia {
@@ -146,7 +134,7 @@
         input-processors = <&tps43_orientation (INPUT_TRANSFORM_XY_SWAP |
                                              INPUT_TRANSFORM_X_INVERT |
                                              INPUT_TRANSFORM_Y_INVERT)>,
-                           <&tps43_touch_swipe>, <&tps43_touch_inertia>,
+                           <&tps43_touch_inertia>,
                            <&tps43_three_finger>;
 
         snipe_layer {
@@ -175,6 +163,8 @@
         rdy-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
 
         single-tap;
+        /* One-finger long press holds the left button: drag. */
+        press-and-hold;
         two-finger-tap;
         scroll;
         /* Three-finger swipe: up/down = minimize/restore all windows. */
