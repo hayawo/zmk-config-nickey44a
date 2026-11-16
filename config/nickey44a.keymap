@@ -9,7 +9,7 @@
 //   左: Alt Space SYMBOL
 //   右: BS Enter, タップ=GRAVE(半角/全角) 長押し=FUNC_NUM
 // トラックパッドの動作は docs/dual-tps43.md を参照。
-//   Layer 1 (SYMBOL) 中は右パッドが Snipe (移動量 2/3) になり、
+//   Layer 1 (SYMBOL) 中は右パッドが Snipe (移動量 1/4) になり、
 //   2本指左右スワイプが進む/戻る → タブ移動に切り替わる。
 // H 長押し=ARROW。
 // BT_CLR は FUNC_NUM の右下角 (NUBS の位置) を 2 秒長押ししたときだけ効く

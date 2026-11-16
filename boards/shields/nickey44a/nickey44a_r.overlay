@@ -152,7 +152,8 @@
         snipe_layer {
             layers = <1>;
             process-next;
-            input-processors = <&zip_xy_scaler 2 3>;
+            /* Layer 1: precise cursor, 1/4 of normal movement. */
+            input-processors = <&zip_xy_scaler 1 4>;
         };
     };
 };
