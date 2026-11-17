@@ -127,11 +127,25 @@
         release-ms = <400>;
     };
 
+    /* Drag lock: after a long-press drag the button stays held for 0.8 s
+     * after lifting, so re-touching and moving continues the drag. A tap
+     * drops immediately. */
+    tps43_drag_lock: tps43_drag_lock {
+        compatible = "zmk,input-processor-drag-lock";
+        #input-processor-cells = <0>;
+        input-device = <&tps43>;
+        button-code = <INPUT_BTN_0>;
+        touch-code = <INPUT_BTN_TOUCH>;
+        tap-ms = <40>;
+        lock-ms = <800>;
+    };
+
     tps43_listener: tps43_listener {
         compatible = "zmk,input-listener";
         device = <&tps43>;
         /* Correct the measured controller output: left -> down, down -> left. */
-        input-processors = <&tps43_orientation (INPUT_TRANSFORM_XY_SWAP |
+        input-processors = <&tps43_drag_lock>,
+                           <&tps43_orientation (INPUT_TRANSFORM_XY_SWAP |
                                              INPUT_TRANSFORM_X_INVERT |
                                              INPUT_TRANSFORM_Y_INVERT)>,
                            <&tps43_touch_inertia>,
@@ -178,7 +192,8 @@
         filter-dynamic-bottom = <5>;
         sensitivity = <100>;
         scroll-sensitivity = <5>;
-        hold-time = <250>;
+        /* Long press starts a drag after 100 ms. */
+        hold-time = <100>;
         enable-power-management;
         /* Faster first-touch response: keep idle/low-power scan intervals short.
          * Costs some battery while the keyboard is awake. */

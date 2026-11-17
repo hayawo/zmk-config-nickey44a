@@ -1,0 +1,24 @@
+description: Keep a long-press drag button held briefly after the finger lifts
+compatible: "zmk,input-processor-drag-lock"
+include: ip_zero_param.yaml
+properties:
+  input-device:
+    type: phandle
+    required: true
+    description: Input device that reports the button; used to inject the delayed release.
+  button-code:
+    type: int
+    required: true
+    description: INPUT_EV_KEY code of the drag button (INPUT_BTN_0).
+  touch-code:
+    type: int
+    required: true
+    description: INPUT_EV_KEY code reporting finger contact (INPUT_BTN_TOUCH).
+  tap-ms:
+    type: int
+    default: 40
+    description: Presses shorter than this are taps, not drags.
+  lock-ms:
+    type: int
+    default: 800
+    description: How long the button stays held after the finger lifts.
