@@ -154,8 +154,8 @@ static const struct zmk_input_processor_driver_api api = {.handle_event = handle
         .tap_ms = DT_INST_PROP(n, tap_ms),                                                         \
         .lock_ms = DT_INST_PROP(n, lock_ms),                                                       \
     };                                                                                             \
-    DEVICE_DT_INST_DEFINE(n, drag_lock_init, NULL, &data_##n, &config_##n, POST_KERNEL,            \
-                          CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &api);
+    DEVICE_DT_INST_DEFINE(n, drag_lock_init, NULL, &data_##n, &config_##n, APPLICATION,            \
+                          CONFIG_APPLICATION_INIT_PRIORITY, &api);
 
 DT_INST_FOREACH_STATUS_OKAY(CREATE_INSTANCE)
 
