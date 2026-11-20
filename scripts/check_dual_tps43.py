@@ -84,7 +84,7 @@ def main():
     assert not enabled(lt, "switch-xy")
     assert lt.props["hold-time"].to_num() == 1
     assert enabled(lt, "invert-scroll-x") and enabled(lt, "invert-scroll-y")
-    assert enabled(rt, "press-and-hold")
+    assert not enabled(rt, "press-and-hold")
     for name in ("single-tap", "two-finger-tap", "scroll", "switch-xy", "invert-x"):
         assert enabled(rt, name), name
     assert enabled(lt, "two-finger-tap") and enabled(lt, "scroll")

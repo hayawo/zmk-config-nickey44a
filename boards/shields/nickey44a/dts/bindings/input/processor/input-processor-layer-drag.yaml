@@ -1,0 +1,23 @@
+description: Hold a mouse button while dragging on a trackpad with a layer active
+compatible: "zmk,input-processor-layer-drag"
+include: ip_zero_param.yaml
+properties:
+  input-device:
+    type: phandle
+    required: true
+    description: Input device used to inject the button press/release.
+  layer:
+    type: int
+    required: true
+  button-code:
+    type: int
+    required: true
+    description: INPUT_EV_KEY code to hold (INPUT_BTN_0).
+  touch-code:
+    type: int
+    required: true
+    description: INPUT_EV_KEY code reporting finger contact (INPUT_BTN_TOUCH).
+  move-threshold:
+    type: int
+    default: 4
+    description: Movement (sum of |REL_X|+|REL_Y|) before the button is pressed.

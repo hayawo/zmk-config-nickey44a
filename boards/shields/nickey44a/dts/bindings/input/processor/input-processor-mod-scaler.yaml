@@ -1,0 +1,14 @@
+description: Scale cursor movement while a modifier is held
+compatible: "zmk,input-processor-mod-scaler"
+include: ip_zero_param.yaml
+properties:
+  mods:
+    type: int
+    required: true
+    description: Explicit modifier bit mask (e.g. MOD_LALT | MOD_RALT).
+  multiplier:
+    type: int
+    default: 1
+  divisor:
+    type: int
+    default: 4
