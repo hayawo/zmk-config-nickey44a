@@ -135,7 +135,8 @@
     };
 
     /* SYMBOL (layer 1) held: once the finger moves, hold the left button
-     * until it lifts (drag). Taps and two-finger taps are unaffected. */
+     * until SYMBOL is released, even across finger lifts (drag). Taps and
+     * two-finger taps are unaffected. */
     tps43_layer_drag: tps43_layer_drag {
         compatible = "zmk,input-processor-layer-drag";
         #input-processor-cells = <0>;
