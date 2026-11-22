@@ -156,6 +156,15 @@
         divisor = <4>;
     };
 
+    /* At most one movement report every 15 ms (movement in between is merged),
+     * so BLE reports do not pile up and lag on hosts with long intervals. */
+    tps43_report_throttle: tps43_report_throttle {
+        compatible = "zmk,input-processor-report-throttle";
+        #input-processor-cells = <0>;
+        input-device = <&tps43>;
+        min-interval-ms = <15>;
+    };
+
     tps43_listener: tps43_listener {
         compatible = "zmk,input-listener";
         device = <&tps43>;
@@ -165,7 +174,7 @@
                                              INPUT_TRANSFORM_X_INVERT |
                                              INPUT_TRANSFORM_Y_INVERT)>,
                            <&tps43_alt_slow>, <&tps43_touch_inertia>,
-                           <&tps43_three_finger>;
+                           <&tps43_three_finger>, <&tps43_report_throttle>;
 
         symbol_layer {
             layers = <1>;

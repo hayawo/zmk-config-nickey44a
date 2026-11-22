@@ -8,3 +8,6 @@ Two small trackpad helpers.
   keep working.
 - `zmk,input-processor-mod-scaler`: scales REL_X/REL_Y by `multiplier /
   divisor` while any of the explicit modifiers in `mods` is held.
+- `zmk,input-processor-report-throttle`: sends at most one movement report
+  per `min-interval-ms`, merging the movement in between, so BLE reports do
+  not queue up and lag when the host uses a long connection interval.
