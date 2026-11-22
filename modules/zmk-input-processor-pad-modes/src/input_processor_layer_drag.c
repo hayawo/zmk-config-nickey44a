@@ -18,7 +18,7 @@ BUILD_ASSERT(DT_NUM_INST_STATUS_OKAY(DT_DRV_COMPAT) == 1,
 
 /*
  * While `layer` is active, the first real cursor movement presses the drag
- * button. The button then stays down, even across finger lifts, until the
+ * button (or the layer activation itself, if the finger is already down). The button then stays down, even across finger lifts, until the
  * layer is released, so the finger can be repositioned on a small pad.
  */
 struct layer_drag_config {
@@ -106,12 +106,21 @@ static int layer_drag_layer_listener(const zmk_event_t *eh) {
     struct layer_drag_data *data = &layer_drag_data_0;
     const struct layer_drag_config *cfg = &layer_drag_config_0;
 
-    if (ev == NULL || ev->state || ev->layer != cfg->layer) {
+    if (ev == NULL || ev->layer != cfg->layer) {
         return ZMK_EV_EVENT_BUBBLE;
     }
-    /* Layer released: drop the drag. */
     k_mutex_lock(&data->lock, K_FOREVER);
-    release_button(data, cfg);
+    if (!ev->state) {
+        /* Layer released: drop the drag. */
+        release_button(data, cfg);
+    } else if (data->touching && !data->held) {
+        /* The finger was already on the pad when the layer came on: grab now,
+         * before any further movement carries the cursor off the target. */
+        if (input_report_key(cfg->input_dev, cfg->button_code, 1, true, K_NO_WAIT) == 0) {
+            data->held = true;
+            data->press_pending = true;
+        }
+    }
     k_mutex_unlock(&data->lock);
     return ZMK_EV_EVENT_BUBBLE;
 }
