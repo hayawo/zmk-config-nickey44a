@@ -127,19 +127,21 @@
         release-ms = <400>;
     };
 
-    /* Used only while SYMBOL is held (see symbol_layer below). */
+    /* Used only while SYMBOL is held (see symbol_layer below). Layer
+     * overrides run BEFORE tps43_orientation, so this sees the raw controller
+     * axes: physical left/right is raw WHEEL and physical up/down is raw
+     * HWHEEL. A physical right swipe is a positive raw WHEEL.
+     * Right swipe = back (Alt+Left), left swipe = forward (Alt+Right). */
     right_symbol_swipe: right_symbol_swipe {
         compatible = "zmk,input-processor-touch-swipe";
         #input-processor-cells = <0>;
-        hwheel-code = <INPUT_REL_HWHEEL>;
-        wheel-code = <INPUT_REL_WHEEL>;
+        hwheel-code = <INPUT_REL_WHEEL>;
+        wheel-code = <INPUT_REL_HWHEEL>;
         touch-code = <INPUT_BTN_TOUCH>;
         threshold = <8>;
         axis-ratio = <2>;
-        /* Physical right swipe is negative after orientation correction:
-         * right swipe = back (Alt+Left), left swipe = forward (Alt+Right). */
-        left-keycode = <LA(LEFT)>;
-        right-keycode = <LA(RIGHT)>;
+        left-keycode = <LA(RIGHT)>;
+        right-keycode = <LA(LEFT)>;
     };
 
     right_middle_click_mapper: right_middle_click_mapper {

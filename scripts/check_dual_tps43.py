@@ -112,7 +112,7 @@ def main():
     assert swipe.props["override-left-keycode"].to_num() == 0x0107002b
     assert swipe.props["override-right-keycode"].to_num() == 0x0307002b
     assert "tps43_touch_swipe" not in right.label2node
-    assert right.label2node["right_symbol_swipe"].props["left-keycode"].to_num() == 0x04070050
+    assert right.label2node["right_symbol_swipe"].props["left-keycode"].to_num() == 0x0407004f
 
     chain, cells = [], cells_of(ls.props["input-processors"])
     while cells:
