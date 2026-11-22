@@ -62,7 +62,9 @@ static int observe_input(const struct device *dev, struct input_event *event,
         if (!event->value) {
             reset(data);
             LOG_DBG("touch swipe release/reset");
-        } else if (!data->touching) {
+        } else {
+            /* Every touch-down starts fresh, even if the previous release was
+             * not seen (e.g. the processor only runs while a layer is held). */
             reset(data);
             data->touching = true;
             LOG_DBG("touch swipe start");

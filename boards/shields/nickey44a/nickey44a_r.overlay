@@ -127,6 +127,21 @@
         release-ms = <400>;
     };
 
+    /* Used only while SYMBOL is held (see symbol_layer below). */
+    right_symbol_swipe: right_symbol_swipe {
+        compatible = "zmk,input-processor-touch-swipe";
+        #input-processor-cells = <0>;
+        hwheel-code = <INPUT_REL_HWHEEL>;
+        wheel-code = <INPUT_REL_WHEEL>;
+        touch-code = <INPUT_BTN_TOUCH>;
+        threshold = <8>;
+        axis-ratio = <2>;
+        /* Physical right swipe is negative after orientation correction:
+         * right swipe = back (Alt+Left), left swipe = forward (Alt+Right). */
+        left-keycode = <LA(LEFT)>;
+        right-keycode = <LA(RIGHT)>;
+    };
+
     right_middle_click_mapper: right_middle_click_mapper {
         compatible = "zmk,input-processor-code-mapper";
         #input-processor-cells = <0>;
@@ -171,8 +186,9 @@
             layers = <1>;
             process-next;
             /* Layer 1: the two-finger tap becomes a middle click instead of a
-             * right click (the drag itself is tps43_layer_drag). */
-            input-processors = <&right_middle_click_mapper>;
+             * right click, and a two-finger left/right swipe is back/forward
+             * instead of horizontal scroll (the drag itself is tps43_layer_drag). */
+            input-processors = <&right_middle_click_mapper>, <&right_symbol_swipe>;
         };
     };
 };
