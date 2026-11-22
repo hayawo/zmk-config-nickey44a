@@ -1,5 +1,6 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/keys.h>
 
 // 大西配列。hayawo/zmk-SIDE48 (config/side48.keymap) をもとに調整。
@@ -16,6 +17,7 @@
 // BT_CLR は FUNC_NUM の右下角 (NUBS の位置) を 2 秒長押ししたときだけ効く
 //   (bt_clr_hold)。消えるのは選択中のプロファイルのペアリングだけ。
 //   全部消したいときは settings_reset を左右に書き込む。
+// FUNC_NUM の E / I の位置: 出力先を USB / Bluetooth に切り替え (USB 接続中に BT で使うとき)。
 // ZMK Studio のロック解除 (&studio_unlock) は FUNC_NUM の - の位置 (Caps の上)。
 // SIDE48 の MOUSE / FUNCTION / SPARE レイヤーは省略 (ポインティングはパッド側で処理)。
 //
@@ -70,7 +72,7 @@
             display-name = "FUNC_NUM";
             bindings = <
 &kp ESCAPE    &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                            &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F12
-&trans        &trans        &trans        &trans        &trans        &studio_unlock                    &trans  &trans  &trans  &trans  &trans   &kp F11
+&trans        &out OUT_USB  &out OUT_BLE  &trans        &trans        &studio_unlock                    &trans  &trans  &trans  &trans  &trans   &kp F11
 &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS        &trans    &trans  &trans  &trans  &trans  &trans  &trans   &bt_clr_hold BT_CLR_CMD 0
                                                         &kp LEFT_GUI  &trans          &trans    &trans  &trans  &trans
             >;
