@@ -37,49 +37,46 @@
 };
 
 / {
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-
-        left_tps43_split: left_tps43_split@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-        };
+    /* Left-half high-resolution dial (sekigon hires-dial-module). The real
+     * PAT9125 sensor sits on the left peripheral; this virtual node receives
+     * its rotation over the split link. counts-per-revolution must match the
+     * left overlay. */
+    hires_dial: hires_dial {
+        compatible = "sekigon,remote-hires-dial";
+        counts-per-revolution = <1500>;
     };
 
-    left_tps43_listener: left_tps43_listener {
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&hires_dial>;
+        /* Key-sending layers (volume, tab switch): 24 steps per turn. */
+        triggers-per-rotation = <24>;
+    };
+
+    /* The dial scroll behaviors report input events on their own device;
+     * these listeners send them to the host as mouse wheel. */
+    dial_hscroll_listener: dial_hscroll_listener {
         compatible = "zmk,input-listener";
-        device = <&left_tps43_split>;
-        input-processors = <&left_tps43_volume>, <&left_tps43_tab_swipe>,
-                           <&left_tps43_pinch_zoom>;
+        device = <&hires_dial_hscroll>;
     };
 
-    /* Left pad one-finger flick: up = volume up, down = volume down.
-     * Left/right flick events are left unmapped and ignored. */
-    left_tps43_volume: left_tps43_volume {
-        compatible = "zmk,input-processor-behaviors";
-        #input-processor-cells = <0>;
-        type = <INPUT_EV_KEY>;
-        codes = <INPUT_BTN_NORTH INPUT_BTN_SOUTH>;
-        bindings = <&kp C_VOLUME_UP>, <&kp C_VOLUME_DOWN>;
+    /* FUNC_NUM: dial = Ctrl + wheel (zoom). dial_zoom reports REL_MISC,
+     * which is turned into WHEEL steps while Ctrl is held. */
+    dial_zoom_listener: dial_zoom_listener {
+        compatible = "zmk,input-listener";
+        device = <&dial_zoom>;
+        input-processors = <&dial_zoom_ctrl>;
     };
 
-    left_tps43_tab_swipe: left_tps43_tab_swipe {
-        compatible = "zmk,input-processor-touch-swipe";
+    dial_zoom_ctrl: dial_zoom_ctrl {
+        compatible = "zmk,input-processor-pinch-zoom";
         #input-processor-cells = <0>;
-        hwheel-code = <INPUT_REL_DIAL>;
-        wheel-code = <INPUT_REL_HWHEEL>;
+        zoom-code = <INPUT_REL_MISC>;
+        wheel-code = <INPUT_REL_WHEEL>;
         touch-code = <INPUT_BTN_TOUCH>;
-        threshold = <8>;
-        axis-ratio = <2>;
-        /* Measured left pad: physical right swipe produces negative DIAL.
-         * Right swipe = back (Alt+Left), left swipe = forward (Alt+Right). */
-        left-keycode = <LA(LEFT)>;
-        right-keycode = <LA(RIGHT)>;
-        /* While SYMBOL (layer 1) is held: switch browser tabs instead. */
-        override-layer = <1>;
-        override-left-keycode = <LC(TAB)>;
-        override-right-keycode = <LC(LS(TAB))>;
+        divisor = <1>;
+        modifier = <LCTRL>;
+        release-ms = <400>;
     };
 
     tps43_orientation: tps43_orientation {
@@ -112,19 +109,6 @@
         type = <INPUT_EV_KEY>;
         codes = <INPUT_BTN_EAST INPUT_BTN_WEST>;
         bindings = <&kp LG(M)>, <&kp LG(LS(M))>;
-    };
-
-    /* Left pad two-finger pinch: Ctrl + mouse wheel (zoom in browsers, Office,
-     * etc.). Last in the left listener chain. */
-    left_tps43_pinch_zoom: left_tps43_pinch_zoom {
-        compatible = "zmk,input-processor-pinch-zoom";
-        #input-processor-cells = <0>;
-        zoom-code = <INPUT_REL_MISC>;
-        wheel-code = <INPUT_REL_WHEEL>;
-        touch-code = <INPUT_BTN_TOUCH>;
-        divisor = <4>;
-        modifier = <LCTRL>;
-        release-ms = <400>;
     };
 
     /* Used only while SYMBOL is held (see symbol_layer below). Layer

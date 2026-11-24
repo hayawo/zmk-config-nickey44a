@@ -1,4 +1,0 @@
-/* Measurement only: TPS43 press-and-hold gesture disabled (the laggy setting). */
-&tps43 {
-    /delete-property/ press-and-hold;
-};

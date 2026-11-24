@@ -8,6 +8,8 @@ manifest:
       url-base: https://github.com/caksoylar
     - name: geeksville
       url-base: https://github.com/geeksville
+    - name: sekigon-gonnoc
+      url-base: https://github.com/sekigon-gonnoc
   projects:
     - name: zmk
       remote: cormoran
@@ -19,5 +21,8 @@ manifest:
     - name: zmk_driver_azoteq
       remote: geeksville
       revision: 66d510249d139569a4060c35bd78c6a2159f83ed
+    - name: zmk-driver-hires-dial
+      remote: sekigon-gonnoc
+      revision: 353a21964a2f6df1de128ca6e71ec63518729ab7 # master 2026-09
   self:
     path: config

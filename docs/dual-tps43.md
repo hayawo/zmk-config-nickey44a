@@ -1,5 +1,7 @@
 # Nickey44A-PAD: 左右TPS43
 
+> ダイヤル版 (ブランチ tps43-dial) では左手のパッドはダイヤルに置き換え。左手については docs/hires-dial.md を参照。
+
 右central／左peripheral。左右とも以下の配線・アドレスを使用する。
 
 | 信号・設定 | 左手のTPS43 | 右手のTPS43 |

@@ -1,14 +1,15 @@
 #include "nickey44a.dtsi"
-#include <input/processors.dtsi>
 #include <dt-bindings/pinctrl/nrf-pinctrl.h>
-#include <zephyr/dt-bindings/input/input-event-codes.h>
 
 /*
- * TPS43 FPC breakout wiring:
- *   SDA = XIAO NFC1/P0.09
- *   SCL = XIAO NFC2/P0.10
- *   RDY = XIAO P1.10
- *   NRST = XIAO P0.16
+ * Left half: sekigon hires-dial-module (PAT9125) instead of the TPS43 pad.
+ * Wiring via the pitch-conversion FPC (pad 6 = square pad):
+ *   FPC 1 GND    -> board pad 1 (GND)
+ *   FPC 2 SDA    -> board pad 2 = XIAO NFC1/P0.09
+ *   FPC 3 SCL    -> board pad 3 = XIAO NFC2/P0.10
+ *   FPC 4 PUSH   -> XIAO P0.16 (white wire, low while pressed)
+ *   FPC 5 MOTION -> XIAO P1.10 (yellow wire, active low)
+ *   FPC 6 3.3V   -> board pad 6 (3.3V)
  */
 
 &uicr {
@@ -16,16 +17,16 @@
 };
 
 &pinctrl {
-    nickey44a_left_tps43_i2c0_default: nickey44a_left_tps43_i2c0_default {
+    nickey44a_left_dial_i2c0_default: nickey44a_left_dial_i2c0_default {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
                     <NRF_PSEL(TWIM_SCL, 0, 10)>;
-            /* The TPS43 breakout has no I2C pull-up resistors. */
+            /* The dial module has no I2C pull-up resistors. */
             bias-pull-up;
         };
     };
 
-    nickey44a_left_tps43_i2c0_sleep: nickey44a_left_tps43_i2c0_sleep {
+    nickey44a_left_dial_i2c0_sleep: nickey44a_left_dial_i2c0_sleep {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
                     <NRF_PSEL(TWIM_SCL, 0, 10)>;
@@ -35,96 +36,69 @@
 };
 
 / {
-    left_swipe_axis_mapper: left_swipe_axis_mapper {
-        compatible = "zmk,input-processor-code-mapper";
-        #input-processor-cells = <0>;
-        type = <INPUT_EV_REL>;
-        map = <INPUT_REL_HWHEEL INPUT_REL_DIAL>;
+    chosen {
+        zmk,kscan = &kscan_left;
     };
 
-    left_wheel_to_hwheel: left_wheel_to_hwheel {
-        compatible = "zmk,input-processor-code-mapper";
-        #input-processor-cells = <0>;
-        type = <INPUT_EV_REL>;
-        map = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+    /* Dial push = matrix position RC(3,5), the left inner key that the pad /
+     * dial replaces (keymap index 30). */
+    dial_push_kscan: dial_push_kscan {
+        compatible = "zmk,kscan-gpio-direct";
+        wakeup-source;
+        input-gpios = <&gpio0 16 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     };
 
-    left_middle_click_mapper: left_middle_click_mapper {
-        compatible = "zmk,input-processor-code-mapper";
-        #input-processor-cells = <0>;
-        type = <INPUT_EV_KEY>;
-        map = <INPUT_BTN_1 INPUT_BTN_2>;
-    };
+    kscan_left: kscan_left {
+        compatible = "zmk,kscan-composite";
+        wakeup-source;
+        rows = <4>;
+        columns = <6>;
 
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
+        matrix {
+            kscan = <&kscan0>;
+        };
 
-        left_tps43_split: left_tps43_split@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            device = <&left_tps43>;
-            /* Keep swipe motion distinct from the mapped horizontal scroll. */
-            input-processors = <&zip_xy_scaler 0 1>,
-                               <&left_swipe_axis_mapper>,
-                               <&left_wheel_to_hwheel>,
-                               <&left_middle_click_mapper>;
+        dial_push {
+            kscan = <&dial_push_kscan>;
+            row-offset = <3>;
+            col-offset = <5>;
         };
     };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&hires_dial>;
+        /* Must match the right overlay (sensor indices are shared). */
+        triggers-per-rotation = <24>;
+    };
+};
+
+&physical_layout0 {
+    kscan = <&kscan_left>;
 };
 
 &i2c0 {
     status = "okay";
     compatible = "nordic,nrf-twim";
-    pinctrl-0 = <&nickey44a_left_tps43_i2c0_default>;
-    pinctrl-1 = <&nickey44a_left_tps43_i2c0_sleep>;
+    pinctrl-0 = <&nickey44a_left_dial_i2c0_default>;
+    pinctrl-1 = <&nickey44a_left_dial_i2c0_sleep>;
     pinctrl-names = "default", "sleep";
     clock-frequency = <I2C_BITRATE_STANDARD>;
     #address-cells = <1>;
     #size-cells = <0>;
 
-    left_tps43: tps43@74 {
-        compatible = "azoteq,tps43";
-        reg = <0x74>;
-        rst-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
-        rdy-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
-
-        press-and-hold;
-        two-finger-tap;
-        scroll;
-        /* One-finger up/down flick = volume (mapped on the central).
-         * The left pad never moves the cursor, so 1-finger swipes are free. */
-        swipes;
-        /* Easier volume flicks: shorter distance, slower and less straight
-         * flicks still count (IQS5xx defaults are roughly 300 px / 150 ms). */
-        swipe-initial-distance = <75>;
-        swipe-initial-time = <300>;
-        swipe-angle = <30>;
-        /* Keep moving after the first flick: one more volume step every
-         * 60 px, as long as each segment takes under 500 ms (slider feel). */
-        swipe-consecutive-distance = <60>;
-        swipe-consecutive-time = <500>;
-        /* Two-finger pinch, converted to Ctrl + wheel on the central. */
-        zoom;
-        /* Reverse vertical gestures before WHEEL is mapped to HWHEEL. */
-        invert-scroll-y;
-        /* Match physical left/right after the controller's invert-x. */
-        invert-scroll-x;
-
-        filter-settings = <0x0B>;
-        filter-dynamic-bottom = <5>;
-        sensitivity = <100>;
-        scroll-sensitivity = <5>;
-        hold-time = <1>;
-        enable-power-management;
-        /* Faster first-touch response: keep idle/low-power scan intervals short.
-         * Costs some battery while the keyboard is awake. */
-        report-rate-idle-touch = <10>;
-        report-rate-idle = <10>;
-        report-rate-lp1 = <20>;
-        report-rate-lp2 = <40>;
-        /* Keep physical vertical motion on WHEEL: no controller XY swap. */
-        invert-x;
+    hires_dial: hires_dial@75 {
+        compatible = "sekigon,hires-dial";
+        reg = <0x75>;
+        motion-gpios = <&gpio1 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        res-cpi = <1275>;
+        /* About 1500 counts per turn (module README). Keep equal to the
+         * remote node in the right overlay. */
+        counts-per-revolution = <1500>;
+        motion-read-interval-ms = <8>;
+        /* If turning clockwise lowers the volume, uncomment this. */
+        /* invert; */
+        sleep1-enable;
     };
 };
 
