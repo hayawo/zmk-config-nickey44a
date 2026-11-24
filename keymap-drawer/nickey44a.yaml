@@ -31,7 +31,7 @@ layers:
   - C
   - V
   - ;
-  - ''
+  - MUTE
   - ''
   - G
   - D
@@ -76,7 +76,7 @@ layers:
   - {t: ▽, type: trans}
   - /
   - '?'
-  - {t: ▽, type: trans}
+  - Ctl+W
   - {t: ▽, type: trans}
   - '~'
   - '{'
@@ -121,7 +121,7 @@ layers:
   - {t: BT, h: '3'}
   - {t: BT, h: '4'}
   - CAPS
-  - {t: ▽, type: trans}
+  - Ctl+0
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -166,7 +166,7 @@ layers:
   - ''
   - {t: ▽, type: trans}
   - ''
-  - ''
+  - PP
   - ''
   - ''
   - {t: ▽, type: trans}
