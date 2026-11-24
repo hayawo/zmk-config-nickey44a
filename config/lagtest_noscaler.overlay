@@ -1,0 +1,10 @@
+#include <dt-bindings/zmk/input_transform.h>
+/* Lag test: without the Alt slow-down processor. */
+&tps43_listener {
+    input-processors = <&tps43_layer_drag>,
+                       <&tps43_orientation (INPUT_TRANSFORM_XY_SWAP |
+                                         INPUT_TRANSFORM_X_INVERT |
+                                         INPUT_TRANSFORM_Y_INVERT)>,
+                       <&tps43_touch_inertia>,
+                       <&tps43_three_finger>;
+};

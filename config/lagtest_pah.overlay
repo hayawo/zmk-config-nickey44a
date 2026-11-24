@@ -1,0 +1,5 @@
+/* Lag test: TPS43 press-and-hold gesture enabled again (as on Friday). */
+&tps43 {
+    press-and-hold;
+    hold-time = <100>;
+};
