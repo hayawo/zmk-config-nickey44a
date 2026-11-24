@@ -31,7 +31,7 @@ layers:
   - C
   - V
   - ;
-  - MUTE
+  - '&mkp MCLK'
   - ''
   - G
   - D
@@ -76,7 +76,7 @@ layers:
   - {t: ▽, type: trans}
   - /
   - '?'
-  - Ctl+W
+  - '&mkp MCLK'
   - {t: ▽, type: trans}
   - '~'
   - '{'
@@ -121,7 +121,7 @@ layers:
   - {t: BT, h: '3'}
   - {t: BT, h: '4'}
   - CAPS
-  - Ctl+0
+  - '&mkp MCLK'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -166,7 +166,7 @@ layers:
   - ''
   - {t: ▽, type: trans}
   - ''
-  - PP
+  - '&mkp MCLK'
   - ''
   - ''
   - {t: ▽, type: trans}
