@@ -212,6 +212,10 @@
         rdy-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
 
         single-tap;
+        /* Keep the TPS43 press-and-hold gesture enabled: with it disabled the
+         * cursor lagged on some hosts (seen in A/B tests). The 10 s hold time
+         * means it effectively never triggers a long-press drag. */
+        press-and-hold;
         two-finger-tap;
         scroll;
         /* Three-finger swipe: up/down = minimize/restore all windows. */
@@ -225,7 +229,7 @@
         filter-dynamic-bottom = <5>;
         sensitivity = <100>;
         scroll-sensitivity = <5>;
-        hold-time = <250>;
+        hold-time = <10000>;
         enable-power-management;
         /* Faster first-touch response: keep idle/low-power scan intervals short.
          * Costs some battery while the keyboard is awake. */
