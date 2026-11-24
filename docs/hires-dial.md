@@ -26,16 +26,18 @@ I2C プルアップはモジュールにないので、XIAO の内部プルア�
 
 ## 割り当て
 
-| レイヤー | 回す | 押す |
-|---|---|---|
-| BASE | 音量 上げ下げ | ミュート |
-| SYMBOL | タブ切替 (Ctrl+Tab / Ctrl+Shift+Tab) | タブを閉じる (Ctrl+W) |
-| FUNC_NUM | 拡大縮小 (Ctrl+ホイール) | 100% に戻す (Ctrl+0) |
-| ARROW | 横スクロール | 再生・一時停止 |
+押し込みは全レイヤーで中クリック。
+
+| レイヤー | 回す |
+|---|---|
+| BASE | 縦スクロール (右回り=下、左回り=上) |
+| SYMBOL | 拡大縮小 (Ctrl+ホイール、右回り=拡大) |
+| FUNC_NUM | 音量 (右回り=上げる) |
+| ARROW | タブ切替 (右回り=次のタブ Ctrl+Tab) |
 
 ## 調整
 
-- 回転方向が逆: `nickey44a_l.overlay` の `invert;` のコメントを外す。
+- 回転方向が全部逆: `nickey44a_l.overlay` の `invert;` のコメントを外す。
 - 音量・タブの 1 周あたりの回数: 左右 overlay の `triggers-per-rotation` (今は 24)。
-- 横スクロール・拡大縮小の速さ: キーマップの `&hires_dial_hscroll 60 1` / `&dial_zoom 150 1`
+- スクロール・拡大縮小の速さ: キーマップの `&hires_dial_scroll 60 1` / `&dial_zoom 150 1`
   (最初の数字を小さくすると速くなる)。

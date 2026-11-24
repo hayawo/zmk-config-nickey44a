@@ -49,18 +49,28 @@
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&hires_dial>;
-        /* Key-sending layers (volume, tab switch): 24 steps per turn. */
+        /* Key-sending layers (FUNC_NUM volume, ARROW tab switch): 24 steps per turn. */
         triggers-per-rotation = <24>;
     };
 
-    /* The dial scroll behaviors report input events on their own device;
-     * these listeners send them to the host as mouse wheel. */
-    dial_hscroll_listener: dial_hscroll_listener {
+    /* BASE: dial = vertical wheel. The scroll behavior reports on its own
+     * device; this listener sends it to the host. Clockwise (positive counts)
+     * becomes a negative wheel = scroll down. */
+    dial_scroll_listener: dial_scroll_listener {
         compatible = "zmk,input-listener";
-        device = <&hires_dial_hscroll>;
+        device = <&hires_dial_scroll>;
+        input-processors = <&dial_wheel_invert INPUT_TRANSFORM_Y_INVERT>;
     };
 
-    /* FUNC_NUM: dial = Ctrl + wheel (zoom). dial_zoom reports REL_MISC,
+    dial_wheel_invert: dial_wheel_invert {
+        compatible = "zmk,input-processor-transform";
+        #input-processor-cells = <1>;
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_WHEEL>;
+    };
+
+    /* SYMBOL: dial = Ctrl + wheel (zoom, clockwise = zoom in). dial_zoom reports REL_MISC,
      * which is turned into WHEEL steps while Ctrl is held. */
     dial_zoom_listener: dial_zoom_listener {
         compatible = "zmk,input-listener";

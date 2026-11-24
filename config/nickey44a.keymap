@@ -3,17 +3,18 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
 
 // 大西配列。hayawo/zmk-SIDE48 (config/side48.keymap) をもとに調整。
 // Nickey44A-PAD (ダイヤル版): 右の内側キー位置に TPS43 トラックパッド、
 //   左の内側キー位置に高分解能ダイヤル (sekigon hires-dial-module)。
 //   右の内側キー (旧 SLASH) は &none。左の内側キー (旧 LEFT_WIN) の位置は
 //   ダイヤルの押し込み。
-// ダイヤル (回す / 押す):
-//   BASE     音量 上げ下げ        / ミュート
-//   SYMBOL   タブ切替 Ctrl+Tab    / タブを閉じる Ctrl+W
-//   FUNC_NUM 拡大縮小 Ctrl+ホイール / 100% に戻す Ctrl+0
-//   ARROW    横スクロール         / 再生・一時停止
+// ダイヤル (回す) / 押し込みは全レイヤーで中クリック:
+//   BASE     縦スクロール (右回り=下、左回り=上)
+//   SYMBOL   拡大縮小 (Ctrl+ホイール、右回り=拡大)
+//   FUNC_NUM 音量 (右回り=上げる)
+//   ARROW    タブ切替 (右回り=次のタブ Ctrl+Tab)
 // 親指キー 3 個:
 //   左: Alt Space SYMBOL
 //   右: BS Enter, タップ=GRAVE(半角/全角) 長押し=FUNC_NUM
@@ -45,7 +46,7 @@
     sensor = <&hires_dial>;
 };
 
-&hires_dial_hscroll {
+&hires_dial_scroll {
     sensor = <&hires_dial>;
 };
 
@@ -72,7 +73,7 @@
 
     // ダイヤルの回転量 → 出力の換算 (1 周 ≒ 1500 カウント)。
     //   &hires_dial_encoder: 1 周で 24 回 (sensors の triggers-per-rotation)。
-    //   &hires_dial_hscroll A B / &dial_zoom A B: A カウントごとに B 段。
+    //   &hires_dial_scroll A B / &dial_zoom A B: A カウントごとに B 段。
 
     keymap {
         compatible = "zmk,keymap";
@@ -82,10 +83,10 @@
             bindings = <
 &kp ESC           &kp Q  &kp L  &kp U  &kp COMMA     &kp PERIOD                        &kp F      &kp W        &kp R  &kp Y  &kp P    &kp EQUAL
 &kp LEFT_CONTROL  &kp E  &kp I  &kp A  &kp O         &kp MINUS                         &kp K      &kp T        &kp N  &kp S  &lt 3 H  &kp SQT
-&kp LSHFT         &kp Z  &kp X  &kp C  &kp V         &kp SEMICOLON  &kp C_MUTE &none     &kp G      &kp D        &kp M  &kp J  &kp B    &kp NON_US_BACKSLASH
+&kp LSHFT         &kp Z  &kp X  &kp C  &kp V         &kp SEMICOLON  &mkp MCLK  &none     &kp G      &kp D        &kp M  &kp J  &kp B    &kp NON_US_BACKSLASH
                                        &kp LEFT_ALT  &kp SPACE      &mo 1    &kp BSPC  &kp ENTER  &lt 2 GRAVE
             >;
-            sensor-bindings = <&hires_dial_encoder C_VOL_UP C_VOL_DN>;
+            sensor-bindings = <&hires_dial_scroll 60 1>;
         };
 
         layer_1 {
@@ -93,10 +94,10 @@
             bindings = <
 &kp TAB  &kp N1    &kp N2  &kp N3    &kp N4      &kp N5                           &kp N6          &kp N7           &kp N8           &kp N9                &kp N0                 &kp DELETE
 &trans   &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR  &kp PRCNT                        &kp CARET       &kp AMPERSAND    &kp ASTRK        &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
-&trans   &trans    &trans  &trans    &kp SLASH   &kp QUESTION  &kp LC(W) &trans   &kp TILDE       &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SLASH
+&trans   &trans    &trans  &trans    &kp SLASH   &kp QUESTION  &mkp MCLK &trans   &kp TILDE       &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SLASH
                                      &trans      &trans        &trans    &kp DEL  &kp SCROLLLOCK  &kp PRINTSCREEN
             >;
-            sensor-bindings = <&hires_dial_encoder LC(TAB) LC(LS(TAB))>;
+            sensor-bindings = <&dial_zoom 150 1>;
         };
 
         layer_2 {
@@ -104,10 +105,10 @@
             bindings = <
 &kp ESCAPE    &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                            &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F12
 &trans        &out OUT_USB  &out OUT_BLE  &trans        &trans        &studio_unlock                    &trans  &trans  &trans  &trans  &trans   &kp F11
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS        &kp LC(N0) &trans  &trans  &trans  &trans  &trans  &trans   &bt_clr_hold BT_CLR_CMD 0
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp CAPS        &mkp MCLK  &trans  &trans  &trans  &trans  &trans  &trans   &bt_clr_hold BT_CLR_CMD 0
                                                         &kp LEFT_GUI  &trans          &trans    &trans  &trans  &trans
             >;
-            sensor-bindings = <&dial_zoom 150 1>;
+            sensor-bindings = <&hires_dial_encoder C_VOL_UP C_VOL_DN>;
         };
 
         layer_3 {
@@ -115,10 +116,10 @@
             bindings = <
 &kp TAB  &none  &trans  &none  &none   &none                         &none  &kp HOME        &kp UP_ARROW    &kp END          &none  &none
 &trans   &none  &none   &none  &none   &none                         &none  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none  &none
-&trans   &none  &none   &none  &trans  &none  &kp C_PP        &none  &none  &trans          &trans          &none            &none  &none
+&trans   &none  &none   &none  &trans  &none  &mkp MCLK       &none  &none  &trans          &trans          &none            &none  &none
                                &trans  &none  &kp LEFT_GUI    &none  &none  &none
             >;
-            sensor-bindings = <&hires_dial_hscroll 60 1>;
+            sensor-bindings = <&hires_dial_encoder LC(TAB) LC(LS(TAB))>;
         };
     };
 };
