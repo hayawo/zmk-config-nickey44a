@@ -31,7 +31,7 @@ I2C プルアップはモジュールにないので、XIAO の内部プルア�
 | レイヤー | 回す |
 |---|---|
 | BASE | 縦スクロール (右回り=下、左回り=上) |
-| SYMBOL | 拡大縮小 (Ctrl+ホイール、右回り=拡大) |
+| SYMBOL | 横スクロール (右回り=右、左回り=左) |
 | FUNC_NUM | 音量 (右回り=上げる) |
 | ARROW | タブ切替 (右回り=次のタブ Ctrl+Tab) |
 
@@ -39,5 +39,5 @@ I2C プルアップはモジュールにないので、XIAO の内部プルア�
 
 - 回転方向が全部逆: `nickey44a_l.overlay` の `invert;` のコメントを外す。
 - 音量・タブの 1 周あたりの回数: 左右 overlay の `triggers-per-rotation` (今は 24)。
-- スクロール・拡大縮小の速さ: キーマップの `&hires_dial_scroll 60 1` / `&dial_zoom 150 1`
+- スクロールの速さ: キーマップの `&hires_dial_scroll 60 1` / `&hires_dial_hscroll 60 1`
   (最初の数字を小さくすると速くなる)。

@@ -12,7 +12,7 @@
 //   ダイヤルの押し込み。
 // ダイヤル (回す) / 押し込みは全レイヤーで中クリック:
 //   BASE     縦スクロール (右回り=下、左回り=上)
-//   SYMBOL   拡大縮小 (Ctrl+ホイール、右回り=拡大)
+//   SYMBOL   横スクロール (右回り=右、左回り=左)
 //   FUNC_NUM 音量 (右回り=上げる)
 //   ARROW    タブ切替 (右回り=次のタブ Ctrl+Tab)
 // 親指キー 3 個:
@@ -50,6 +50,10 @@
     sensor = <&hires_dial>;
 };
 
+&hires_dial_hscroll {
+    sensor = <&hires_dial>;
+};
+
 / {
     behaviors {
         // 2 秒押し続けたときだけ BT_CLR。それより早く離すと何もしない。
@@ -60,20 +64,11 @@
             tapping-term-ms = <2000>;
             bindings = <&bt>, <&none>;
         };
-
-        // ダイヤル: Ctrl+ホイール用。REL_MISC を出し、右手側で
-        // Ctrl を押したままのホイールに変換する (nickey44a_r.overlay)。
-        dial_zoom: dial_zoom {
-            compatible = "zmk,behavior-hires-dial-scroll";
-            #sensor-binding-cells = <2>;
-            input-code = <INPUT_REL_MISC>;
-            sensor = <&hires_dial>;
-        };
     };
 
     // ダイヤルの回転量 → 出力の換算 (1 周 ≒ 1500 カウント)。
     //   &hires_dial_encoder: 1 周で 24 回 (sensors の triggers-per-rotation)。
-    //   &hires_dial_scroll A B / &dial_zoom A B: A カウントごとに B 段。
+    //   &hires_dial_scroll / &hires_dial_hscroll A B: A カウントごとに B 段。
 
     keymap {
         compatible = "zmk,keymap";
@@ -97,7 +92,7 @@
 &trans   &trans    &trans  &trans    &kp SLASH   &kp QUESTION  &mkp MCLK &trans   &kp TILDE       &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SLASH
                                      &trans      &trans        &trans    &kp DEL  &kp SCROLLLOCK  &kp PRINTSCREEN
             >;
-            sensor-bindings = <&dial_zoom 150 1>;
+            sensor-bindings = <&hires_dial_hscroll 60 1>;
         };
 
         layer_2 {

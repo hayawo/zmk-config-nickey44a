@@ -70,23 +70,11 @@
         y-codes = <INPUT_REL_WHEEL>;
     };
 
-    /* SYMBOL: dial = Ctrl + wheel (zoom, clockwise = zoom in). dial_zoom reports REL_MISC,
-     * which is turned into WHEEL steps while Ctrl is held. */
-    dial_zoom_listener: dial_zoom_listener {
+    /* SYMBOL: dial = horizontal wheel. Clockwise (positive counts) is a
+     * positive HWHEEL = scroll right. */
+    dial_hscroll_listener: dial_hscroll_listener {
         compatible = "zmk,input-listener";
-        device = <&dial_zoom>;
-        input-processors = <&dial_zoom_ctrl>;
-    };
-
-    dial_zoom_ctrl: dial_zoom_ctrl {
-        compatible = "zmk,input-processor-pinch-zoom";
-        #input-processor-cells = <0>;
-        zoom-code = <INPUT_REL_MISC>;
-        wheel-code = <INPUT_REL_WHEEL>;
-        touch-code = <INPUT_BTN_TOUCH>;
-        divisor = <1>;
-        modifier = <LCTRL>;
-        release-ms = <400>;
+        device = <&hires_dial_hscroll>;
     };
 
     tps43_orientation: tps43_orientation {
